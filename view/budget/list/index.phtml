@@ -1,0 +1,99 @@
+<div class="row">
+
+    <div class="col-md-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Budget Units</h3>
+            </div>
+            <div class="panel-body">
+                <?php foreach ($this->unitCloud as $unitName => $frequency): ?>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="<?= $this->url('budget', ['action' => 'index'], ['query' => ['unit' => $unitName]]);
+                    ?>">                   
+
+                                <span style="font-size:{{{PHP12}}}em">
+                                    <?= $this->escapeHtml($unitName); ?>
+                                </span>
+
+                            </a>
+                        </li>
+                    </ul>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>
+                    Budget Book ~ Version 1.0.0
+                </h3>
+            </div>
+            <div class="panel-body">
+                <hr>
+                <a class="btn btn-primary" href="<?= $this->url('budget', ['action' => 'index']); ?>"><span><i class="fa fa-home" aria-hidden="true"></i></span>&nbsp;&nbsp;Home</a>
+                <a class="btn btn-primary" href="<?= $this->url('transaction', ['action' => 'createbudgethead']); ?>"><span><i class="fa fa-plus-square" aria-hidden="true"></i></span>&nbsp;&nbsp;Add New Budget Head</a>
+                <hr>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date Posted</th>
+                            <th>Description</th>
+                            <th>Branch/Unit</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($budgets as $budget): ?>
+                            <tr>
+                                <td><?= $this->escapeHtml(date('jS \ F Y', strtotime($budget->getDateCreated()))); ?> </td>
+                                <td><?= $this->escapeHtml($budget->getBudgethead()); ?></td>
+                                <td><?= $this->escapeHtml($budgetManager->convertUnitsToString($budget)); ?></td>
+                                <td><span class="badge"><?= $this->escapeHtml($budgetManager->getLedgerCountStr($budget)); ?></span></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" href="<?= $this->url('transaction', ['action' => 'view', 'id' => $budget->getId()]);?>">
+                                            <span><i class="fa fa-eye" aria-hidden="true"></i></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <hr>
+                <a class="btn btn-primary" href="<?= $this->url('budget', ['action' => 'index']); ?>"><span><i class="fa fa-home" aria-hidden="true"></i></span>&nbsp;&nbsp;Home</a>
+                <a class="btn btn-primary" href="<?= $this->url('transaction', ['action' => 'createbudgethead']); ?>"><span><i class="fa fa-plus-square" aria-hidden="true"></i></span>&nbsp;&nbsp;Add New Budget Head</a>
+                <?=
+                $this->paginationControl($budgets, 'Sliding', 'budget/partial/paginator', ['route' => 'budget']);
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Budget Months</h3>
+            </div>
+            <div class="panel-body">
+                <?php foreach ($this->monthCloud as $monthName => $frequency): ?>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="<?= $this->url('budget', ['action' => 'index'], ['query' => ['month' => $monthName]]);
+                    ?>">                   
+
+                                <span style="font-size:{{{PHP12}}}em">
+                                    <?= $this->escapeHtml($monthName); ?>
+                                </span>
+
+                            </a>
+                        </li>
+                    </ul>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
